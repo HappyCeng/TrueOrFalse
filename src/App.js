@@ -7,6 +7,7 @@
  */
 
 import React, {Component} from 'react';
+import firebase from 'firebase';
 import { Platform, StyleSheet, Text, Image, View, TouchableOpacity, Alert, Button} from 'react-native';
 
 const instructions = Platform.select({
@@ -16,8 +17,15 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
+var config = {
+  databaseURL: "https://trueorfalse-b8890.firebaseio.com/",
+  projectId: "trueorfalse-b8890",
+};
+firebase.initializeApp(config);
+
 var i = 0;
 var SampleNameArray = [require('../images/number_two.png'), require('../images/number_one.png')];
+var deneme = 'degiştir.'
 
 export default class App extends Component<{}> {
  
@@ -25,9 +33,10 @@ export default class App extends Component<{}> {
     super(props);
 
     this.state = {
-      mainBackgroundColor : 'pink',
+      mainBackgroundColor : 'red',
       btnTrueColor : 'red',
       btnFalseColor : 'red',
+      newTitle : 'Değiş',
       imgTrueButton : require('../images/img_true.png'),
       imgFalseButton : require('../images/img_false.png'),
       imgMainSection: require('../images/number_one.png'),
@@ -42,6 +51,13 @@ export default class App extends Component<{}> {
         this.setState({ imgMainSection: SampleNameArray[i] });
         i++;
     }
+    readUserData() {
+      firebase.database().ref('trueorfalse-b8890/deneme').on('value', function (snapshot) {
+          console.log(snapshot.val());
+          deneme = snapshot.val();
+          alert(deneme);
+      });
+  }  
    
   render() {
     return (
@@ -51,8 +67,8 @@ export default class App extends Component<{}> {
         </View>
             <View style={{ flex: 1, flexDirection: 'row' }}>
                 <Button
-                    onPress={() => this.changeImage()}
-                    title="Değiştir"
+                    onPress={() => this.readUserData()}
+                    title= {deneme}
                 />
             </View>
         <View style = {{flex:1, flexDirection:'row'}}>
