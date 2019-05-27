@@ -25,7 +25,7 @@ firebase.initializeApp(config);
 
 var i = 0;
 var SampleNameArray = [require('../images/number_two.png'), require('../images/number_one.png')];
-var deneme = 'degiştir.'
+var deneme = 'ilk hali'
 
 export default class App extends Component<{}> {
  
@@ -36,7 +36,7 @@ export default class App extends Component<{}> {
       mainBackgroundColor : 'red',
       btnTrueColor : 'red',
       btnFalseColor : 'red',
-      newTitle : 'Değiş',
+      newTitle : deneme,
       imgTrueButton : require('../images/img_true.png'),
       imgFalseButton : require('../images/img_false.png'),
       imgMainSection: require('../images/number_one.png'),
@@ -55,6 +55,7 @@ export default class App extends Component<{}> {
       firebase.database().ref('deneme/').on('value', function (snapshot) {
           console.log(snapshot.val());
           deneme = snapshot.val();
+          this.setState({newTitle : deneme});
           alert(deneme);
       });
     }
@@ -68,7 +69,7 @@ export default class App extends Component<{}> {
             <View style={{ flex: 1, flexDirection: 'row' }}>
                 <Button
                     onPress={() => this.readUserData()}
-                    title= {deneme}
+                    title = {this.state.newTitle}
                 />
             </View>
         <View style = {{flex:1, flexDirection:'row'}}>
