@@ -52,12 +52,12 @@ export default class App extends Component<{}> {
         i++;
     }
     readUserData() {
-      firebase.database().ref('trueorfalse-b8890/deneme').on('value', function (snapshot) {
+      firebase.database().ref('deneme/').on('value', function (snapshot) {
           console.log(snapshot.val());
           deneme = snapshot.val();
           alert(deneme);
       });
-  }  
+    }
    
   render() {
     return (
